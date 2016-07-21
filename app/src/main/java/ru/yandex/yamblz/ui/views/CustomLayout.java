@@ -3,15 +3,10 @@ package ru.yandex.yamblz.ui.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 public class CustomLayout extends ViewGroup {
-    public static final String LOG_TAG = "LogTag";
-    private int invokeMeasureCount;
-    private int invokeLayoutCount;
-
 
     public CustomLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -24,7 +19,6 @@ public class CustomLayout extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.d(LOG_TAG, "Invoke layout count : " + (++invokeLayoutCount));
         final int count = getChildCount();
         int curWidth, curHeight, curLeft, curTop;
 
@@ -43,6 +37,7 @@ public class CustomLayout extends ViewGroup {
             curWidth = child.getMeasuredWidth();
             curHeight = child.getMeasuredHeight();
 
+
             child.layout(curLeft, curTop, curLeft + curWidth, curTop + curHeight);
             curLeft += curWidth;
         }
@@ -50,12 +45,12 @@ public class CustomLayout extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-        Log.d(LOG_TAG, "Invoke measure count : " + (++invokeMeasureCount));
+        final int width = MeasureSpec.getSize(widthMeasureSpec);
+        final int height = MeasureSpec.getSize(heightMeasureSpec);
         int leftOffset = 0;
 
-        int count = getChildCount();
+        final int count = getChildCount();
+
         View viewWithMatchParentWidth = null;
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);
