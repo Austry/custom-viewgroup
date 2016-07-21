@@ -24,7 +24,7 @@ public class CustomLayout extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.d(LOG_TAG, "Invoke layout count : "+ (++invokeLayoutCount));
+        Log.d(LOG_TAG, "Invoke layout count : " + (++invokeLayoutCount));
         final int count = getChildCount();
         int curWidth, curHeight, curLeft, curTop;
 
@@ -37,8 +37,8 @@ public class CustomLayout extends ViewGroup {
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
 
-            if (child.getVisibility() == GONE){
-                return;
+            if (child.getVisibility() == GONE) {
+                break;
             }
             curWidth = child.getMeasuredWidth();
             curHeight = child.getMeasuredHeight();
@@ -52,7 +52,7 @@ public class CustomLayout extends ViewGroup {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
-        Log.d(LOG_TAG, "Invoke measure count : "+ (++invokeMeasureCount));
+        Log.d(LOG_TAG, "Invoke measure count : " + (++invokeMeasureCount));
         int leftOffset = 0;
 
         int count = getChildCount();
@@ -64,15 +64,15 @@ public class CustomLayout extends ViewGroup {
                 continue;
             }
 
-            if(child.getLayoutParams().width == LayoutParams.MATCH_PARENT){
+            if (child.getLayoutParams().width == LayoutParams.MATCH_PARENT) {
                 viewWithMatchParentWidth = child;
-            }else {
+            } else {
                 measureChild(child, widthMeasureSpec, heightMeasureSpec);
                 leftOffset += child.getMeasuredWidth();
             }
         }
 
-        if(viewWithMatchParentWidth != null){
+        if (viewWithMatchParentWidth != null) {
             int lastSpec = MeasureSpec.makeMeasureSpec(width - leftOffset, MeasureSpec.EXACTLY);
             viewWithMatchParentWidth.measure(lastSpec, heightMeasureSpec);
         }
